@@ -1,3 +1,9 @@
+protonvpn-cli (3.7.1-1) unstable; urgency=medium
+
+  * Hotfix: Display force disable connectivity check message in case of failure
+  
+ -- Proton Technologies AG <opensource@proton.me>  Tue, 22 Jun 2021 17:45:00 +0100
+ 
 protonvpn-cli (3.7.0-3) unstable; urgency=medium
 
   * Feature: Generate and provide easy access to logs

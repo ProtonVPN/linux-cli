@@ -212,6 +212,17 @@ class CLIWrapper:
                 "correctly typed the servername."
             )
             return
+        except exceptions.DisableConnectivityCheckError as e:
+            logger.exception(e)
+            print(
+                "\nIt was not possible to automatically disable connectivity check. "
+                "This step is necessary for the Kill Switch to function properly, "
+                "please disable connectivity check copying and pasting the following"
+                "command into terminal:\nbusctl set-property org.freedesktop.NetworkManager "
+                "/org/freedesktop/NetworkManager org.freedesktop.NetworkManager "
+                "ConnectivityCheckEnabled 'b' 0"
+            )
+            return
         except (exceptions.ProtonVPNException, Exception) as e:
             logger.exception(e)
             print(

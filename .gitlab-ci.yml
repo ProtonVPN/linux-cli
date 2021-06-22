@@ -12,9 +12,6 @@ include:
  - project: 'ProtonVPN/Linux/_gitlab-ci'
    ref: public-protonvpn-repo
    file: 'gitlab-ci-build-publish-arch.yml'
- - project: 'ProtonVPN/Linux/_gitlab-ci'
-   ref: public-protonvpn-repo
-   file: 'gitlab-ci-build-publish-centos8.yml'
  - project: 'agarroux/publish-github'
    ref: master
    file: '/jobs/release.gitlab-ci.yml'
@@ -67,12 +64,6 @@ make-image-arch:
  script:
    - make image-arch branch=$CI_COMMIT_REF_SLUG src=archlinux
 
-make-image-centos8:
- stage: image
- extends: make-image-deb
- script:
-   - make image-centos8 branch=$CI_COMMIT_REF_SLUG src=centos8
-
 make-image-fed31:
  stage: image
  extends: make-image-deb
@@ -114,12 +105,6 @@ test-arch:
    - job: make-image-arch
  image: $CI_REGISTRY_IMAGE/archlinux:branch-$CI_COMMIT_REF_SLUG
 
-test-centos8:
- extends: test-deb
- needs:
-   - job: make-image-centos8
- image: $CI_REGISTRY_IMAGE/centos8:branch-$CI_COMMIT_REF_SLUG
-
 test-fed31:
  extends: test-deb
  needs:
@@ -154,7 +139,6 @@ release-publish-github:
    - job: build-fed32
    - job: build-fed33
    - job: build-fed34
-   - job: build-centos8
   when: manual
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonVPN/linux-cli.git
@@ -170,7 +154,6 @@ release-publish-github-tags:
    - job: build-fed32
    - job: build-fed33
    - job: build-fed34
-   - job: build-centos8
   when: manual
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonVPN/linux-cli.git

@@ -17,11 +17,10 @@ IMAGE_URL_FED31 = fedora:31
 IMAGE_URL_FED32 = fedora:32
 IMAGE_URL_FED33 = fedora:33
 IMAGE_URL_FED34 = fedora:34
-IMAGE_URL_CENTOS8 = centos:8
 IMAGE_URL_ARCH = archlinux:base-devel-20210131.0.14634
 
 # Run make base to build both images based on ubuntu and fedora
-base: image-deb image-fed31 image-fed32 image-fed33 image-fed34 image-centos8 image-arch
+base: image-deb image-fed31 image-fed32 image-fed33 image-fed34 image-arch
 
 # Create the image based on ubuntu
 image-deb: image
@@ -32,11 +31,6 @@ image-deb: src = ubuntu
 image-arch: image
 image-arch: DOCKER_FILE_SOURCE = Dockerfile.arch
 image-arch: src = archlinux
-
-# Create the image based on fedora 34
-image-centos8: image
-image-centos8: DOCKER_FILE_SOURCE = Dockerfile.centos8
-image-centos8: src = centos8
 
 # Create the image based on fedora 31
 image-fed31: image
@@ -71,7 +65,7 @@ image: requirements.txt docker-source
 
 ## We host our own copy of the image ubuntu:latest
 docker-source:
-	sed "s|IMAGE_URL_CENTOS8|$(IMAGE_URL_CENTOS8)|; s|IMAGE_URL_FED31|$(IMAGE_URL_FED31)|; s|IMAGE_URL_FED32|$(IMAGE_URL_FED32)|; s|IMAGE_URL_FED33|$(IMAGE_URL_FED33)|; s|IMAGE_URL_FED34|$(IMAGE_URL_FED34)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
+	sed "s|IMAGE_URL_FED31|$(IMAGE_URL_FED31)|; s|IMAGE_URL_FED32|$(IMAGE_URL_FED32)|; s|IMAGE_URL_FED33|$(IMAGE_URL_FED33)|; s|IMAGE_URL_FED34|$(IMAGE_URL_FED34)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
 
 requirements.txt:
 	@ touch requirements.txt
@@ -93,7 +87,7 @@ local: docker-source
 	@ rm -rf __SOURCE_APP || true
 local: NAME_IMAGE = linux-cli:latest
 
-local-base: local-deb local-fed31 local-fed32 local-fed33 local-fed34 local-centos8 local-arch
+local-base: local-deb local-fed31 local-fed32 local-fed33 local-fed34 local-arch
 
 local-deb: local
 local-deb: DOCKER_FILE_SOURCE = Dockerfile.deb
@@ -109,9 +103,6 @@ local-fed33: DOCKER_FILE_SOURCE = Dockerfile.fed33
 
 local-fed34: local
 local-fed34: DOCKER_FILE_SOURCE = Dockerfile.fed34
-
-local-centos8: local
-local-centos8: DOCKER_FILE_SOURCE = Dockerfile.centos8
 
 local-arch: local
 local-arch: DOCKER_FILE_SOURCE = Dockerfile.arch
@@ -168,16 +159,6 @@ test-fed33: local-fed33
 			python3 -m pytest
 			
 test-fed34: local-fed34
-	# Keep -it because with colors it's better
-	@ docker run \
-			--rm \
-			-it \
-			--privileged \
-			--volume $(PWD)/.env:/home/user/proton-python-client.env \
-			proton-python-client:latest \
-			python3 -m pytest
-
-test-centos8: local-centos8
 	# Keep -it because with colors it's better
 	@ docker run \
 			--rm \

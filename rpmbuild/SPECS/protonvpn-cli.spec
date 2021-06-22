@@ -1,6 +1,6 @@
 %define unmangled_name protonvpn-cli
-%define version 3.7.0
-%define release 3
+%define version 3.7.1
+%define release 1
 
 Prefix: %{_prefix}
 
@@ -46,6 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Tue Jun 22 2021 Proton Technologies AG <opensource@proton.me> 3.7.1-1
+- Hotfix: Display force disable connectivity check message in case of failure
+
 * Fri Jun 18 2021 Proton Technologies AG <opensource@proton.me> 3.7.0-3
 - Feature: Generate and provide easy access to logs
 
