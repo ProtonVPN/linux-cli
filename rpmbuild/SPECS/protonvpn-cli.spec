@@ -1,5 +1,5 @@
 %define unmangled_name protonvpn-cli
-%define version 3.9.0
+%define version 3.9.1
 %define release 1
 
 Prefix: %{_prefix}
@@ -46,6 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Thu Sep 30 2021 Proton Technologies AG <opensource@proton.me> 3.9.1-1
+- Fix: VPN Accelerator setting (unable to either disable or enable it)
+
 * Mon Aug 09 2021 Proton Technologies AG <opensource@proton.me> 3.9.0-1
 - Feature: Add alternative routing option
 

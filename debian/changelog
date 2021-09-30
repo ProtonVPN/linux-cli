@@ -1,3 +1,9 @@
+protonvpn-cli (3.9.1-1) unstable; urgency=medium
+
+  * Fix: VPN Accelerator setting (unable to either disable or enable it)
+  
+ -- Proton Technologies AG <opensource@proton.me>  Thu, 30 Sep 2021 10:45:00 +0100
+
 protonvpn-cli (3.9.0-1) unstable; urgency=medium
 
   * Feature: Add alternative routing option
