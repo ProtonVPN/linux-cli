@@ -56,7 +56,7 @@ examples:
 """
 
 CONNECT_HELP = """
-usage:  protonvpn-cli (c | connect) [-h | --help] 
+usage:  protonvpn-cli (c | connect) [-h | --help]
         [[<servername> | [-f | --fastest] | [-r | --random] | --cc | --sc | --p2p | --tor] [-p | --protocol] <protocol>]]
 
 positional arguments:
@@ -82,6 +82,38 @@ examples:
     protonvpn-cli connect --tor
     protonvpn-cli c --random --protocol udp
     protonvpn-cli c --help
+"""
+
+AUTOSTART_HELP = """
+usage:  protonvpn-cli (as | autostart) [-h | --help] [--off | --on]
+        [[<servername> | [-f | --fastest] | [-r | --random] | --cc | --sc | --p2p | --tor] [(-p | --protocol) <protocol>] [--gui]]
+
+positional arguments:
+    <servername>    Directly connecto to
+                    specified server (ie: CH#4, CH-US-1, HK5-Tor).
+
+optional arguments:
+    --off, --on     Disable or enable ProtonVPN autostart.
+    -f, --fastest   Connect to the fastest ProtonVPN server.
+    -r, --random    Connect to a random ProtonVPN server.
+    --cc            Connect to the specified country code (SE, PT, BR, AR).
+    --sc            Connect to the fastest Secure-Core server.
+    --p2p           Connect to the fastest P2P server.
+    --tor           Connect to the fastest Tor server.
+    -p , --protocol Connect via specified protocol.
+    --gui           Autostart ProtonVPN's GUI.
+    -h, --help      Display help message.
+
+examples:
+    protonvpn-cli autostart --off
+    protonvpn-cli autostart --on PT#8 -p tcp
+    protonvpn-cli autostart --on --fastest --protocol udp --gui
+    protonvpn-cli as --on --cc PT -p tcp
+    protonvpn-cli as --on --sc --gui
+    protonvpn-cli as --on --p2p -p tcp
+    protonvpn-cli autostart --on --tor --gui
+    protonvpn-cli as --on --random --protocol udp
+    protonvpn-cli as --help
 """
 
 CONFIG_HELP = """

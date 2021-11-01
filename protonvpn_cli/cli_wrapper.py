@@ -4,6 +4,8 @@ import getpass
 import inspect
 import time
 from textwrap import dedent
+from pathlib import Path
+import subprocess
 
 from protonvpn_nm_lib import exceptions
 from protonvpn_nm_lib.api import protonvpn
@@ -329,6 +331,152 @@ class CLIWrapper:
             return 1
 
         return self._connect()
+
+    def autostart(self, args):
+        """Proxymethod to autostart ProtonVPN."""
+
+        print("Setting up ProtonVPN autostart.")
+        has_service = Path("~/.config/systemd/user/protonvpn-autostart.service").is_file()
+
+        if not args.enabled and has_service:
+            try:
+                subprocess.run(["systemctl", "--user", "disable", "protonvpn-autostart.service"], check= True)
+                print("\nProtonVPN autostart disabled successfully.")
+            except subprocess.CalledProcessError as e:
+                logger.exception(e)
+                print("\nCould not disable ProtonVPN autostart.")
+                return 1
+        elif args.enabled:
+            connect_type = False
+            connect_type_extra_arg = False
+
+            for cls_attr in inspect.getmembers(args):
+                if cls_attr[0] in self.CLI_CONNECT_DICT and cls_attr[1]:
+                    connect_type = self.CLI_CONNECT_DICT[cls_attr[0]]
+
+                    if isinstance(cls_attr[1], bool):
+                        connect_type_extra_arg = cls_attr[0]
+                        break
+
+                    connect_type_extra_arg = cls_attr[1]
+
+            protocol = args.protocol
+
+            if has_service:
+                if connect_type or connect_type_extra_arg or args.gui:
+                    active = False
+
+                    try:
+                        subprocess.run(["systemctl", "--user", "is-active", "protonvpn.service"], check= True)
+                        subprocess.run(["systemctl", "--user", "stop", "protonvpn.service"], check= True)
+                        active = True
+                    except subprocess.CalledProcessError:
+                        pass
+
+                    try:
+                        self._generate_service(connect_type, connect_type_extra_arg, protocol, args.gui)
+                    except Exception as e:
+                        logger.exception(e)
+                        print("\nCould not generate service file.")
+                        return 1
+
+                    try:
+                        subprocess.run(["systemctl", "--user", "daemon-reload"], check= True)
+                    except subprocess.CalledProcessError as e:
+                        logger.exception(e)
+                        print("\nCould not reload Systemd daemon.")
+                        return 1
+
+                    if active:
+                        try:
+                            subprocess.run(["systemctl", "--user", "start", "protonvpn.service"], check= True)
+                        except subprocess.CalledProcessError as e:
+                            logger.exception(e)
+                            print("\nCould not restart service.")
+                            return 1
+            else:
+                if not connect_type and not connect_type_extra_arg:
+                    try:
+                        servername, protocol = self.dialog.start()
+                    except Exception as e:
+                        logger.exception(e)
+                        print("\n{}".format(e))
+                        return 1
+
+                    connect_type = ConnectionTypeEnum.SERVERNAME
+                    connect_type_extra_arg = servername
+                    protocol = protocol
+
+                try:
+                    self._generate_service(connect_type, connect_type_extra_arg, protocol, args.gui)
+                except Exception as e:
+                    logger.exception(e)
+                    print("\nCould not generate service file.")
+                    return 1
+
+                try:
+                    subprocess.run(["systemctl", "--user", "daemon-reload"], check= True)
+                except subprocess.CalledProcessError as e:
+                    logger.exception(e)
+                    print("\nCould not reload Systemd daemon.")
+                    return 1
+
+            try:
+                subprocess.run(["systemctl", "--user", "enable", "protonvpn.service"], check= True)
+                print("\nProtonVPN autostart enabled successfully.")
+            except subprocess.CalledProcessError as e:
+                logger.exception(e)
+                print("\nCould not enable ProtonVPN autostart.")
+                return 1
+
+        return 0
+
+    def _generate_service(self, connect_type, connect_type_extra_arg, protocol, gui):
+        unit = "[Unit]"
+        unit += "\nDescription=ProtonVPN autostart service"
+        unit += "\n\n[Service]"
+        unit += "\nType=oneshot"
+        unit += "\nRemainAfterExit=yes"
+        unit += "\nExecStartPre=sh -c \"until systemctl is-active network-online.target; do sleep 1; done\""
+
+        if self.user_settings.killswitch != KillswitchStatusEnum.DISABLED:
+            unit += "\nExecStartPre=protonvpn-cli ks --off"
+            unit += "\nExecStartPre=protonvpn-cli ks --"
+
+            if self.user_settings.killswitch == KillswitchStatusEnum.HARD:
+                unit += "permanent"
+            else:
+                unit += "on"
+
+        unit += "\nExecStart=protonvpn-cli c "
+
+        if connect_type == ConnectionTypeEnum.FASTEST:
+            unit += "-f"
+        elif connect_type == ConnectionTypeEnum.RANDOM:
+            unit += "-r"
+        elif connect_type == ConnectionTypeEnum.SECURE_CORE:
+            unit += "--sc"
+        elif connect_type == ConnectionTypeEnum.PEER2PEER:
+            unit += "--p2p"
+        elif connect_type == ConnectionTypeEnum.TOR:
+            unit += "--tor"
+        elif connect_type == ConnectionTypeEnum.COUNTRY:
+            unit += "--cc " + connect_type_extra_arg
+        else:
+            unit += connect_type_extra_arg
+
+        if protocol != None:
+            unit += " -p " + protocol
+
+        if gui:
+            unit += "\nExecStartPost=-sh -c \"protonvpn &\""
+
+        unit += "\nExecStop=protonvpn-cli d"
+        unit += "\n\n[Install]"
+        unit += "\nWantedBy=default.target"
+
+        with open("~/.config/systemd/user/protonvpn-autostart.service", "w") as file:
+            file.write(unit)
 
     def disconnect(self):
         """Proxymethod to disconnect from ProtonVPN."""
