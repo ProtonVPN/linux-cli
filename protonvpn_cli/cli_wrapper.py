@@ -437,17 +437,17 @@ class CLIWrapper:
         unit += "\n\n[Service]"
         unit += "\nType=oneshot"
         unit += "\nRemainAfterExit=yes"
-        unit += "\nExecStartPre=sh -c \"until systemctl is-active network-online.target; do sleep 1; done\""
 
         if self.user_settings.killswitch != KillswitchStatusEnum.DISABLED:
-            unit += "\nExecStartPre=protonvpn-cli ks --off"
-            unit += "\nExecStartPre=protonvpn-cli ks --"
+            unit += "\nExecStartPre=-protonvpn-cli ks --off"
+            unit += "\nExecStartPre=-protonvpn-cli ks --"
 
             if self.user_settings.killswitch == KillswitchStatusEnum.HARD:
                 unit += "permanent"
             else:
                 unit += "on"
 
+        unit += "\nExecStartPre=sh -c \"until systemctl is-active network-online.target; do sleep 1; done\""
         unit += "\nExecStart=protonvpn-cli c "
 
         if connect_type == ConnectionTypeEnum.FASTEST:
@@ -471,7 +471,9 @@ class CLIWrapper:
         if gui:
             unit += "\nExecStartPost=-sh -c \"protonvpn &\""
 
+        unit += "\nTimeoutStartSec=30"
         unit += "\nExecStop=protonvpn-cli d"
+        unit += "\nRestart=on-failure"
         unit += "\n\n[Install]"
         unit += "\nWantedBy=default.target"
 
