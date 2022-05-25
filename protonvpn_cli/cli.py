@@ -7,7 +7,7 @@ from protonvpn_nm_lib.enums import ProtocolEnum
 
 from .cli_wrapper import CLIWrapper
 from .constants import (APP_VERSION, CONFIG_HELP,
-                        CONNECT_HELP, KS_HELP, LOGIN_HELP, MAIN_CLI_HELP,
+                        CONNECT_HELP, AUTOSTART_HELP, KS_HELP, LOGIN_HELP, MAIN_CLI_HELP,
                         NETSHIELD_HELP)
 from .logger import logger
 
@@ -131,6 +131,39 @@ class ProtonVPNCLI:
             return 0
 
         return self.cli_wrapper.connect(args)
+
+    def as(self):
+        """Shortcut to autostart ProtonVPN."""
+
+        return self.autostart()
+
+    def autostart(self):
+        """Autostart ProtonVPN."""
+
+        parser = argparse.ArgumentParser(description= "Autostart ProtonVPN", prog= "protonvpn-cli as", add_help= False)
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument("--off", help= "Disable ProtonVPN autostart.", dest= "enabled", action= "store_false")
+        group.add_argument("--on", help= "Enable and set up ProtonVPN autostart.", dest= "enabled", action= "store_true")
+        parser.set_defaults(enabled= True)
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument("servername", nargs= "?", help= "Servername (CH#4, CH-US-1, HK5-Tor).", metavar= "")
+        group.add_argument("-f", "--fastest", help= "Connect to the fastest ProtonVPN server.", action= "store_true")
+        group.add_argument("-r", "--random", help= "Connect to a random ProtonVPN server.", action= "store_true")
+        group.add_argument("--cc", help= "Connect to the specified country code (SE, PT, BR, AR).", metavar= "")
+        group.add_argument("--sc", help= "Connect to the fastest Secure-Core server.", action= "store_true")
+        group.add_argument("--p2p", help= "Connect to the fastest torrent server.", action= "store_true")
+        group.add_argument("--tor", help= "Connect to the fastest Tor server.", action= "store_true")
+        parser.add_argument("-p", "--protocol", help= "Connect via specified protocol.", choices= [ProtocolEnum.TCP.value, ProtocolEnum.UDP.value], metavar= "", type= str.lower)
+        parser.add_argument("--gui", help= "Autostart ProtonVPN's GUI.", action= "store_true")
+        parser.add_argument("-h", "--help", required= False, action= "store_true")
+        args = parser.parse_args(sys.argv[2:])
+        logger.info("Options: {}".format(args))
+
+        if args.help:
+            print(AUTOSTART_HELP)
+            return 0
+
+        return self.cli_wrapper.autostart(args)
 
     def d(self):
         """Shortcut to disconnect from Proton VPN."""
