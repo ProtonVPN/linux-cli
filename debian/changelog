@@ -1,3 +1,9 @@
+protonvpn-cli (3.12.0-1) unstable; urgency=medium
+
+  * Introducing Proton's refreshed look. As we continue to make privacy accessible to everyone, we've updated our apps to provide you with an even better experience with our services. Proton - Privacy by default
+  
+ -- Proton Technologies AG <opensource@proton.me>  Thu, 19 May 2022 09:00:00 +0000
+ 
 protonvpn-cli (3.11.1-4) unstable; urgency=medium
 
   * Bugfix: Display message when incorrectly formatted servername is provided

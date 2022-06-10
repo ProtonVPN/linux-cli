@@ -1,8 +1,8 @@
-APP_VERSION = "3.11.1"
+APP_VERSION = "3.12.0"
 LOGGER_NAME = "protonvpn-cli"
 
 MAIN_CLI_HELP = """
-ProtonVPN CLI v{}
+Proton VPN CLI v{}
 
 For bugs and errors, please use the form https://protonvpn.com/support-form
 or send a report to support@protonvpn.com.
@@ -10,10 +10,10 @@ or send a report to support@protonvpn.com.
 usage:  protonvpn-cli [--version | --help] <command>
 
 commands:
-    login               Login with ProtonVPN credentials.
-    logout              Disconnect, remove ProtonVPN connection and logout.
-    c, connect          Connect to ProtonVPN.
-    d, disconnect       Disconnect from ProtonVPN.
+    login               Login with Proton VPN credentials.
+    logout              Disconnect, remove Proton VPN connection and logout.
+    c, connect          Connect to Proton VPN.
+    d, disconnect       Disconnect from Proton VPN.
     s, status           Show connection status.
     r, reconnect        Reconnect to previously connected server.
     config              Configure user settings.
@@ -23,7 +23,7 @@ commands:
 optional arguments:
     -h, --help          Display help message.
     -v, --version       Display versions.
-    --get-logs          Get ProtonVPN logs.
+    --get-logs          Get Proton VPN logs.
 
 examples:
     protonvpn-cli login
@@ -45,7 +45,7 @@ LOGIN_HELP = """
 usage:  protonvpn-cli login [-h | --help] <pvpn_username>
 
 positional arguments:
-    <pvpn_username> ProtonVPN Username
+    <pvpn_username> Proton VPN Username
 
 optional arguments:
     -h, --help      Display help message.
@@ -64,8 +64,8 @@ positional arguments:
                     specified server (ie: CH#4, CH-US-1, HK5-Tor).
 
 optional arguments:
-    -f, --fastest   Connect to the fastest ProtonVPN server.
-    -r, --random    Connect to a random ProtonVPN server.
+    -f, --fastest   Connect to the fastest Proton VPN server.
+    -r, --random    Connect to a random Proton VPN server.
     --cc            Connect to the specified country code (SE, PT, BR, AR).
     --sc            Connect to the fastest Secure-Core server.
     --p2p           Connect to the fastest P2P server.

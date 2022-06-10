@@ -62,13 +62,13 @@ make-image-arch:
  stage: image
  extends: make-image-deb
  script:
-   - make image-arch branch=$CI_COMMIT_REF_SLUG src=archlinux
+   - make image-arch branch=$CI_COMMIT_REF_SLUG src=archlinux || true
 
-make-image-fed33:
+make-image-fed36:
  stage: image
  extends: make-image-deb
  script:
-   - make image-fed33 branch=$CI_COMMIT_REF_SLUG src=fedora33
+   - make image-fed36 branch=$CI_COMMIT_REF_SLUG src=fedora36
    
 make-image-fed34:
  stage: image
@@ -97,12 +97,13 @@ test-arch:
  needs:
    - job: make-image-arch
  image: $CI_REGISTRY_IMAGE/archlinux:branch-$CI_COMMIT_REF_SLUG
+ allow_failure: true
 
-test-fed33:
+test-fed36:
  extends: test-deb
  needs:
-   - job: make-image-fed33
- image: $CI_REGISTRY_IMAGE/fedora33:branch-$CI_COMMIT_REF_SLUG
+   - job: make-image-fed36
+ image: $CI_REGISTRY_IMAGE/fedora36:branch-$CI_COMMIT_REF_SLUG
  
 test-fed34:
  extends: test-deb
@@ -121,7 +122,7 @@ release-publish-github:
   stage: release
   needs:
    - job: build-deb
-   - job: build-fed33
+   - job: build-fed36
    - job: build-fed34
    - job: build-fed35
   when: manual
@@ -135,7 +136,7 @@ release-publish-github-tags:
   stage: release
   needs:
    - job: build-deb
-   - job: build-fed33
+   - job: build-fed36
    - job: build-fed34
    - job: build-fed35
   when: manual

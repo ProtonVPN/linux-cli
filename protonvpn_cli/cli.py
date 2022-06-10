@@ -27,7 +27,7 @@ class ProtonVPNCLI:
             + "------------"
         )
         logger.info(
-            "ProtonVPN CLI v{} "
+            "Proton VPN CLI v{} "
             "(protonvpn-nm-lib v{}; proton-client v{})".format(
                 APP_VERSION, lib_version, proton_version
             )
@@ -49,7 +49,7 @@ class ProtonVPNCLI:
 
         if args.version:
             print(
-                "\nProtonVPN CLI v{} "
+                "\nProton VPN CLI v{} "
                 "(protonvpn-nm-lib v{}; proton-client v{})".format(
                     APP_VERSION, lib_version, proton_version
                 )
@@ -67,13 +67,13 @@ class ProtonVPNCLI:
         parser.exit(res)
 
     def c(self):
-        """Shortcut to connect to ProtonVPN."""
+        """Shortcut to connect to Proton VPN."""
         return self.connect()
 
     def connect(self):
-        """Connect to ProtonVPN."""
+        """Connect to Proton VPN."""
         parser = argparse.ArgumentParser(
-            description="Connect to ProtonVPN", prog="protonvpn-cli c",
+            description="Connect to Proton VPN", prog="protonvpn-cli c",
             add_help=False
         )
         group = parser.add_mutually_exclusive_group()
@@ -85,12 +85,12 @@ class ProtonVPNCLI:
         )
         group.add_argument(
             "-f", "--fastest",
-            help="Connect to the fastest ProtonVPN server.",
+            help="Connect to the fastest Proton VPN server.",
             action="store_true"
         )
         group.add_argument(
             "-r", "--random",
-            help="Connect to a random ProtonVPN server.",
+            help="Connect to a random Proton VPN server.",
             action="store_true"
         )
         group.add_argument(
@@ -133,22 +133,22 @@ class ProtonVPNCLI:
         return self.cli_wrapper.connect(args)
 
     def d(self):
-        """Shortcut to disconnect from ProtonVPN."""
+        """Shortcut to disconnect from Proton VPN."""
         return self.disconnect()
 
     def disconnect(self):
-        """Disconnect from ProtonVPN."""
+        """Disconnect from Proton VPN."""
         return self.cli_wrapper.disconnect()
 
     def login(self):
-        """Login ProtonVPN."""
+        """Login Proton VPN."""
         parser = argparse.ArgumentParser(
-            description="Connect to ProtonVPN", prog="protonvpn-cli login",
+            description="Connect to Proton VPN", prog="protonvpn-cli login",
             add_help=False
         )
         parser.add_argument(
             "username",
-            help="ProtonVPN username.",
+            help="Proton VPN username.",
             nargs="?",
         )
         parser.add_argument(
@@ -162,7 +162,7 @@ class ProtonVPNCLI:
         return self.cli_wrapper.login(args.username)
 
     def logout(self):
-        """Logout ProtonVPN."""
+        """Logout Proton VPN."""
         return self.cli_wrapper.logout()
 
     def s(self):
@@ -180,7 +180,7 @@ class ProtonVPNCLI:
     def killswitch(self):
         """Manage killswitch settings."""
         parser = argparse.ArgumentParser(
-            description="Connect to ProtonVPN",
+            description="Connect to Proton VPN",
             prog="protonvpn-cli killswitch",
             add_help=False
         )
@@ -231,7 +231,7 @@ class ProtonVPNCLI:
     def netshield(self):
         """Manage NetShield settings."""
         parser = argparse.ArgumentParser(
-            description="Connect to ProtonVPN",
+            description="Connect to Proton VPN",
             prog="protonvpn-cli netshield",
             add_help=False
         )
@@ -271,7 +271,7 @@ class ProtonVPNCLI:
         """Manage user settings."""
         def custom_dns():
             parser = argparse.ArgumentParser(
-                description="Set ProtonVPN DNS setting",
+                description="Set Proton VPN DNS setting",
                 prog="protonvpn-cli config --dns custom",
                 add_help=False
             )
@@ -291,7 +291,7 @@ class ProtonVPNCLI:
             return self.cli_wrapper.configurations_menu(args)
 
         parser = argparse.ArgumentParser(
-            description="Connect to ProtonVPN", prog="protonvpn-cli config",
+            description="Connect to Proton VPN", prog="protonvpn-cli config",
             add_help=False
         )
         group = parser.add_mutually_exclusive_group()

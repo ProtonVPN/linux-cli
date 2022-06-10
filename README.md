@@ -1,25 +1,25 @@
-# ProtonVPN Linux CLI
+# Proton VPN Linux CLI
 
 Copyright (c) 2021 Proton Technologies AG
 
-This repository holds the ProtonVPN Linux CLI.
+This repository holds the Proton VPN Linux CLI.
 For licensing information see [COPYING](COPYING.md).
 For contribution policy see [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Description
-The [ProtonVPN](https://protonvpn.com) Linux CLI is intended for every ProtonVPN service user.
+The [Proton VPN](https://protonvpn.com) Linux CLI is intended for every Proton VPN service user.
 
 You can download the latest stable release, either from our official repositories or directly on the [official GitHub repository](https://github.com/ProtonVPN/linux-cli/releases/latest).
 
 ### Dependencies:
 | **Distro**                              | **Command**                                                                                                     |
 |:----------------------------------------|:----------------------------------------------------------------------------------------------------------------|
-|Fedora/CentOS/RHEL                       | `python3-dialog` |
+|Fedora/RHEL                              | `python3-dialog` |
 |Ubuntu/Linux Mint/Debian and derivatives | `python3-dialog` |
 |Arch Linux/Manjaro                       | `python-pythondialog` |
 
 ### Additional dependency:
-[ProtonVPN NM Library](https://github.com/ProtonVPN/protonvpn-nm-lib)
+[Proton VPN NM Library](https://github.com/ProtonVPN/protonvpn-nm-lib)
 KWallet or Gnome-keyring
 
 ## Installation
@@ -29,8 +29,8 @@ Follow our [knowledge base article](https://protonvpn.com/support/linux-vpn-tool
 
 | **Command**                           | **Description**                                       |
 |:--------------------------------------|:------------------------------------------------------|
-|`protonvpn-cli login <pvpn_username>`  | Login with ProtonVPN credentials.                     |
-|`protonvpn-cli logout`                 | Logout from ProtonVPN.                                |
+|`protonvpn-cli login <pvpn_username>`  | Login with Proton VPN credentials.                     |
+|`protonvpn-cli logout`                 | Logout from Proton VPN.                                |
 |`protonvpn-cli connect, c`             | Display connnect dialog in terminal.                  |
 |`protonvpn-cli c [servername]`         | Connect to specified server.                          |
 |`protonvpn-cli c -r`                   | Connect to random server.                             |

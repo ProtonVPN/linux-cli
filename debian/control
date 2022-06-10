@@ -11,6 +11,6 @@ Architecture: all
 Homepage: https://github.com/ProtonVPN
 Section: net
 Depends: ${python3:Depends}, ${misc:Depends}, python3-dialog, python3-protonvpn-nm-lib
-Description: ProtonVPN CLI (Python 3)
- Package installs official ProtonVPN CLI.
+Description: Proton VPN CLI (Python 3)
+ Package installs official Proton VPN CLI.
 

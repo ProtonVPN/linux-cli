@@ -59,12 +59,12 @@ class CLIWrapper:
         self.dialog = ProtonVPNDialog(self.protonvpn)
 
     def login(self, username=None):
-        """Proxymethod to login user with ProtonVPN credentials."""
+        """Proxymethod to login user with Proton VPN credentials."""
         if self.protonvpn.check_session_exists():
             print("\nYou are already logged in.")
             return 1
 
-        password = getpass.getpass("Enter your ProtonVPN password: ")
+        password = getpass.getpass("Enter your Proton VPN password: ")
         logger.info("Credentials provided, attempting to login")
 
         retry_or_contact_support = "Please retry or contact support."
@@ -206,7 +206,7 @@ class CLIWrapper:
     def logout(self):
         """Proxymethod to logout user."""
         if not self.protonvpn.check_session_exists():
-            print("\nNo ProtonVPN session was found, please login first.")
+            print("\nNo Proton VPN session was found, please login first.")
             return 1
 
         if self.protonvpn.get_active_protonvpn_connection():
@@ -238,7 +238,7 @@ class CLIWrapper:
         return 0
 
     def connect(self, args, only_free=False):
-        """Proxymethod to connect to ProtonVPN."""
+        """Proxymethod to connect to Proton VPN."""
         if not self.protonvpn.check_session_exists():
             print("\nNo session was found. Please login first.")
             return 1
@@ -268,7 +268,7 @@ class CLIWrapper:
             connect_type_extra_arg = servername
             protocol = protocol
 
-        print("Setting up ProtonVPN.")
+        print("Setting up Proton VPN.")
         killswitch_msg = "If Kill Switch is enabled, please disabled " \
             "it temporarily to store necessary configurations."
         relogin_msg = "If you've recently upgraded your plan, please re-login."
@@ -387,15 +387,15 @@ class CLIWrapper:
         return self._connect(args, only_free)
 
     def disconnect(self):
-        """Proxymethod to disconnect from ProtonVPN."""
-        print("Attempting to disconnect from ProtonVPN.")
+        """Proxymethod to disconnect from Proton VPN."""
+        print("Attempting to disconnect from Proton VPN.")
 
         try:
             self.protonvpn.disconnect()
         except exceptions.ConnectionNotFound:
             print(
-                "\nNo ProtonVPN connection was found. "
-                "Please connect first to a ProtonVPN server."
+                "\nNo Proton VPN connection was found. "
+                "Please connect first to a Proton VPN server."
             )
             return 1
         except (exceptions.ProtonVPNException, Exception) as e:
@@ -403,12 +403,12 @@ class CLIWrapper:
             print("\n{}".format(e))
             return 1
 
-        print("\nSuccessfully disconnected from ProtonVPN.")
+        print("\nSuccessfully disconnected from Proton VPN.")
         return 0
 
     def reconnect(self):
         """Reconnect to previously connected server."""
-        print("Gathering previous ProtonVPN connection data.")
+        print("Gathering previous Proton VPN connection data.")
         try:
             self.protonvpn.setup_reconnect()
         except (exceptions.ProtonVPNException, Exception) as e:
@@ -434,7 +434,7 @@ class CLIWrapper:
 
         connection_metadata = self.protonvpn.get_connection_metadata()
         print(
-            "{} to ProtonVPN on {} with {}.".format(
+            "{} to Proton VPN on {} with {}.".format(
                 "Reconnecting" if is_reconnecting else "Connecting",
                 connection_metadata[
                     ConnectionMetadataEnum.SERVER.value
@@ -450,7 +450,7 @@ class CLIWrapper:
             logger.exception(e)
             print(
                 "\nThe account is flagged as delinquent due to unpaid invoices."
-                "\nYou can continue to use ProtonVPN, but any paid features are now disabled.\n"
+                "\nYou can continue to use Proton VPN, but any paid features are now disabled.\n"
             )
             _disable_non_free_features()
             return _reconnect_to_fastest_server()
@@ -487,10 +487,10 @@ class CLIWrapper:
         state = connect_response.get(ConnectionStartStatusEnum.STATE, None)
 
         if state == VPNConnectionStateEnum.IS_ACTIVE:
-            print("\nSuccessfully connected to ProtonVPN.")
+            print("\nSuccessfully connected to Proton VPN.")
             return 0
         else:
-            print("\nUnable to connect to ProtonVPN: {}".format(
+            print("\nUnable to connect to Proton VPN: {}".format(
                 connect_response[ConnectionStartStatusEnum.MESSAGE]
             ))
             return 1
@@ -717,7 +717,7 @@ class CLIWrapper:
             return 1
 
         status_to_print = dedent("""
-            ProtonVPN User Settings
+            Proton VPN User Settings
             ---------------------------
             Default Protocol:\t{protocol}
             Kill Switch:\t\t{killswitch}
@@ -817,7 +817,7 @@ class CLIWrapper:
 
         logger.info("Restoring default configurations")
 
-        print("Restoring default ProtonVPN configurations...")
+        print("Restoring default Proton VPN configurations...")
         time.sleep(0.5)
 
         try:
@@ -855,7 +855,7 @@ class CLIWrapper:
     def status(self):
         """Proxymethod to diplay connection status."""
         if not self.protonvpn.get_active_protonvpn_connection():
-            print("\nNo active ProtonVPN connection.")
+            print("\nNo active Proton VPN connection.")
             return 0
 
         # cache servers if needed
@@ -896,7 +896,7 @@ class CLIWrapper:
         )
 
         status_to_print = dedent("""
-            ProtonVPN Connection Status
+            Proton VPN Connection Status
             ---------------------------
             IP: \t\t {server_ip}
             Server: \t {server}

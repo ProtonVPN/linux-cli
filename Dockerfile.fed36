@@ -1,4 +1,4 @@
-FROM IMAGE_URL_CENTOS8
+FROM IMAGE_URL_FED36
 ARG git_repo_lib
 ENV git_repo_lib=${git_repo_lib:-GIT_REPO_LIB}
 ARG git_repo_client
@@ -8,8 +8,6 @@ ENV git_branch=${git_branch:-GIT_BRANCH}
 
 ARG pkgname
 ENV pkgname=${pkgname:-linux-cli}
-
-RUN dnf update -y && dnf install epel-release -y
 
 RUN dnf install -y \
     net-tools \
@@ -49,6 +47,7 @@ RUN dnf install -y \
     python3-pyOpenSSL \
     python3-bcrypt \
     python3-gnupg \
+    python3-systemd \
     && python3 -m pip install --upgrade sentry-sdk==0.10.2 \
     && useradd -ms /bin/bash user \
     && usermod -a -G wheel user \

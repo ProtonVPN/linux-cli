@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 from protonvpn_cli.constants import APP_VERSION
 
 long_description = """
-Official ProtonVPN CLI for Linux based systems.
+Official Proton VPN CLI for Linux based systems.
 """
 
 setup(
@@ -16,7 +16,7 @@ setup(
             "protonvpn-cli = protonvpn_cli.main:main"
         ]
     },
-    description="Official ProtonVPN CLI for Linux",
+    description="Official Proton VPN CLI for Linux",
     author="Proton Technologies AG",
     author_email="contact@protonvpn.com",
     long_description=long_description,

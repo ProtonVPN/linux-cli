@@ -155,7 +155,7 @@ class ProtonVPNDialog:
         """Show dialog and process response."""
         d = Dialog(dialog="dialog", autowidgetsize=True)
 
-        code, tag = d.menu(headline, title="ProtonVPN-CLI", choices=choices)
+        code, tag = d.menu(headline, title="Proton VPN-CLI", choices=choices)
         if code == "ok":
             return tag
         else:

@@ -6,7 +6,7 @@ import sys
 def main():
     if "SUDO_UID" in os.environ:
         print(
-            "\nRunning ProtonVPN as root is not supported and "
+            "\nRunning Proton VPN as root is not supported and "
             "is highly discouraged, as it might introduce "
             "undesirable side-effects."
         )

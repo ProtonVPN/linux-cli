@@ -13,13 +13,13 @@ ifeq ($(branch), latest)
 endif
 
 IMAGE_URL_DEB = ubuntu:latest
-IMAGE_URL_FED33 = fedora:33
+IMAGE_URL_FED36 = fedora:36
 IMAGE_URL_FED34 = fedora:34
 IMAGE_URL_FED35 = fedora:35
 IMAGE_URL_ARCH = archlinux:latest
 
 # Run make base to build both images based on ubuntu and fedora
-base: image-deb image-fed33 image-fed34 image-fed35 image-arch
+base: image-deb image-fed36 image-fed34 image-fed35 image-arch
 
 # Create the image based on ubuntu
 image-deb: image
@@ -31,10 +31,10 @@ image-arch: image
 image-arch: DOCKER_FILE_SOURCE = Dockerfile.arch
 image-arch: src = archlinux
 
-# Create the image based on fedora 33
-image-fed33: image
-image-fed33: DOCKER_FILE_SOURCE = Dockerfile.fed33
-image-fed33: src = fedora33
+# Create the image based on fedora 36
+image-fed36: image
+image-fed36: DOCKER_FILE_SOURCE = Dockerfile.fed36
+image-fed36: src = fedora36
 
 # Create the image based on fedora 34
 image-fed34: image
@@ -59,7 +59,7 @@ image: requirements.txt docker-source
 
 ## We host our own copy of the image ubuntu:latest
 docker-source:
-	sed "s|IMAGE_URL_FED33|$(IMAGE_URL_FED33)|; s|IMAGE_URL_FED34|$(IMAGE_URL_FED34)|; s|IMAGE_URL_FED35|$(IMAGE_URL_FED35)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
+	sed "s|IMAGE_URL_FED36|$(IMAGE_URL_FED36)|; s|IMAGE_URL_FED34|$(IMAGE_URL_FED34)|; s|IMAGE_URL_FED35|$(IMAGE_URL_FED35)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
 
 requirements.txt:
 	@ touch requirements.txt
@@ -81,13 +81,13 @@ local: docker-source
 	@ rm -rf __SOURCE_APP || true
 local: NAME_IMAGE = linux-cli:latest
 
-local-base: local-deb local-fed33 local-fed34 local-fed35 local-arch
+local-base: local-deb local-fed36 local-fed34 local-fed35 local-arch
 
 local-deb: local
 local-deb: DOCKER_FILE_SOURCE = Dockerfile.deb
 
-local-fed33: local
-local-fed33: DOCKER_FILE_SOURCE = Dockerfile.fed33
+local-fed36: local
+local-fed36: DOCKER_FILE_SOURCE = Dockerfile.fed36
 
 local-fed34: local
 local-fed34: DOCKER_FILE_SOURCE = Dockerfile.fed34
@@ -119,7 +119,7 @@ test-deb: local-deb
 			python3 -m pytest
 
 ## Run tests against the latest version of the image from your code
-test-fed33: local-fed33
+test-fed36: local-fed36
 	# Keep -it because with colors it's better
 	@ docker run \
 			--rm \

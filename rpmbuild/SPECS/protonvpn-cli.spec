@@ -1,5 +1,5 @@
 %define unmangled_name protonvpn-cli
-%define version 3.11.1
+%define version 3.12.0
 %define release 4
 
 Prefix: %{_prefix}
@@ -9,7 +9,7 @@ Version: %{version}
 Release: %{release}
 Summary: Official ProtonVPN CLI
 
-Group: ProtonVPN
+Group: Proton VPN
 License: GPLv3
 Url: https://github.com/ProtonVPN
 Vendor: Proton Technologies AG <opensource@proton.me>
@@ -25,7 +25,7 @@ Requires: python3-dialog
 %{?python_disable_dependency_generator}
 
 %description
-Official ProtonVPN CLI.
+Official Proton VPN CLI.
 
 
 %prep
@@ -46,6 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Thu May 19 2022 Proton Technologies AG <opensource@proton.me> 3.12.0-1
+- Introducing Proton's refreshed look. As we continue to make privacy accessible to everyone, we've updated our apps to provide you with an even better experience with our services. Proton - Privacy by default
+
 * Thu Dez 16 2021 Proton Technologies AG <opensource@proton.me> 3.11.1-4
 - Bugfix: Display message when incorrectly formatted servername is provided
 - Feature: Moderate NAT, Non Standard Ports
