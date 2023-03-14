@@ -13,12 +13,11 @@ ifeq ($(branch), latest)
 endif
 
 IMAGE_URL_DEB = ubuntu:latest
-IMAGE_URL_FED36 = fedora:36
 IMAGE_URL_FED37 = fedora:37
 IMAGE_URL_ARCH = archlinux:latest
 
 # Run make base to build both images based on ubuntu and fedora
-base: image-deb image-fed36 image-fed37 image-arch
+base: image-deb image-fed37 image-arch
 
 # Create the image based on ubuntu
 image-deb: image
@@ -29,11 +28,6 @@ image-deb: src = ubuntu
 image-arch: image
 image-arch: DOCKER_FILE_SOURCE = Dockerfile.arch
 image-arch: src = archlinux
-
-# Create the image based on fedora 36
-image-fed36: image
-image-fed36: DOCKER_FILE_SOURCE = Dockerfile.fed36
-image-fed36: src = fedora36
 
 # Create the image based on fedora 37
 image-fed37: image
@@ -53,7 +47,7 @@ image: requirements.txt docker-source
 
 ## We host our own copy of the image ubuntu:latest
 docker-source:
-	sed "s|IMAGE_URL_FED36|$(IMAGE_URL_FED36)|; s|IMAGE_URL_FED37|$(IMAGE_URL_FED37)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
+	sed "s|IMAGE_URL_FED37|$(IMAGE_URL_FED37)|; s|IMAGE_URL_DEB|$(IMAGE_URL_DEB)|; s|IMAGE_URL_ARCH|$(IMAGE_URL_ARCH)|" $(DOCKER_FILE_SOURCE) > /tmp/Dockerfile.image
 
 requirements.txt:
 	@ touch requirements.txt
@@ -75,13 +69,10 @@ local: docker-source
 	@ rm -rf __SOURCE_APP || true
 local: NAME_IMAGE = linux-cli:latest
 
-local-base: local-deb local-fed36 local-fed37 local-arch
+local-base: local-deb local-fed37 local-arch
 
 local-deb: local
 local-deb: DOCKER_FILE_SOURCE = Dockerfile.deb
-
-local-fed36: local
-local-fed36: DOCKER_FILE_SOURCE = Dockerfile.fed36
 
 local-fed37: local
 local-fed37: DOCKER_FILE_SOURCE = Dockerfile.fed37
@@ -107,17 +98,6 @@ test-deb: local-deb
 			--privileged \
 			--volume $(PWD)/home/user/linux-cli/ \
 			linux-cli:latest \
-			python3 -m pytest
-
-## Run tests against the latest version of the image from your code
-test-fed36: local-fed36
-	# Keep -it because with colors it's better
-	@ docker run \
-			--rm \
-			-it \
-			--privileged \
-			--volume $(PWD)/.env:/home/user/proton-python-client.env \
-			proton-python-client:latest \
 			python3 -m pytest
 
 test-fed37: local-fed37
