@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -10,9 +9,7 @@ def main():
             "is highly discouraged, as it might introduce "
             "undesirable side-effects."
         )
-        user_input = input("Are you sure that you want to proceed (y/N): ")
-        user_input = user_input.lower()
-        if not user_input == "y":
+        if not (choice := input("Are you sure that you want to proceed (y/N): ").lower()) == "y":
             sys.exit(1)
 
     # Import has to be made here due to dbus delay on ubuntu 18.04,
