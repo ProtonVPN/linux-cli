@@ -20,6 +20,7 @@ You can download the latest stable release, either from our official repositorie
 
 ### Additional dependency:
 [Proton VPN NM Library](https://github.com/ProtonVPN/protonvpn-nm-lib)
+KWallet or Gnome-keyring
 
 ## Installation
 Follow our [knowledge base article](https://protonvpn.com/support/linux-vpn-tool/) on how to install the CLI on your system.
