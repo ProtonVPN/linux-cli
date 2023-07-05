@@ -116,7 +116,7 @@ class CLIWrapper:
         except (exceptions.ProtonVPNException, Exception) as e:
             logger.exception(e)
             print(
-                "\nUnknown error occured. If the issue persists, "
+                "\nUnknown error occurred. If the issue persists, "
                 "please contact support."
             )
             return 1
@@ -382,7 +382,7 @@ class CLIWrapper:
         except (exceptions.ProtonVPNException, Exception) as e:
             logger.exception(e)
             print(
-                "\nAn unknown error has occured. Please ensure that you have "
+                "\nAn unknown error has occurred. Please ensure that you have "
                 "internet connectivity."
                 "\nIf the issue persists, please contact support."
             )
@@ -745,7 +745,7 @@ class CLIWrapper:
         return 0
 
     def __transform_user_setting_to_readable_format(self, raw_format):
-        """Transform the dict in raw_format to human readeable format.
+        """Transform the dict in raw_format to human readable format.
 
         Args:
             raw_format (dict)
@@ -857,7 +857,7 @@ class CLIWrapper:
         return 0
 
     def status(self):
-        """Proxymethod to diplay connection status."""
+        """Proxymethod to display connection status."""
         if not self.protonvpn.get_active_protonvpn_connection():
             print("\nNo active Proton VPN connection.")
             return 0
@@ -938,7 +938,7 @@ class CLIWrapper:
         return 0
 
     def __transform_status_to_readable_format(self, raw_dict):
-        """Transform raw dict to human redeable vales:
+        """Transform raw dict to human readable vales:
 
         Args:
             raw_dict (dict)

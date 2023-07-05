@@ -60,7 +60,7 @@ usage:  protonvpn-cli (c | connect) [-h | --help]
         [[<servername> | [-f | --fastest] | [-r | --random] | --cc | --sc | --p2p | --tor] [-p | --protocol] <protocol>]]
 
 positional arguments:
-    <servername>    Directly connecto to
+    <servername>    Directly connect to
                     specified server (ie: CH#4, CH-US-1, HK5-Tor).
 
 optional arguments:
@@ -99,7 +99,7 @@ optional arguments:
     --moderate-nat      Change Moderate NAT preference.
                         If disabled then strict NAT is applied.
     --non-standard-ports Change Non Standard Ports preference.
-                        If disabled then a limited ammount of ports will be used for improved security.
+                        If disabled then a limited amount of ports will be used for improved security.
     --vpn-accelerator   VPN Accelerator enables a set of unique performance
                         enhancing technologies which can increase VPN speeds by up to 400%.
     -h, --help          Display help message.
@@ -126,7 +126,7 @@ optional arguments:
                     and stop it when disconnecting from VPN.
     --off           Stop and remove Kill Switch.
     --permanent     Start Kill Switch regardless of VPN connection.
-                    Warning: This takes effect immediatly and you
+                    Warning: This takes effect immediately and you
                     might end up without internet connection.
                     Either connect to VPN or turn the ks off.
     -h, --help      Display help message.
