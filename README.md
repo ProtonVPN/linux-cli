@@ -30,7 +30,7 @@ Follow our [knowledge base article](https://protonvpn.com/support/linux-vpn-tool
 |:--------------------------------------|:------------------------------------------------------|
 |`protonvpn-cli login <pvpn_username>`  | Login with Proton VPN credentials.                     |
 |`protonvpn-cli logout`                 | Logout from Proton VPN.                                |
-|`protonvpn-cli connect, c`             | Display connnect dialog in terminal.                  |
+|`protonvpn-cli connect, c`             | Display connect dialog in terminal.                  |
 |`protonvpn-cli c [servername]`         | Connect to specified server.                          |
 |`protonvpn-cli c -r`                   | Connect to random server.                             |
 |`protonvpn-cli c -f`                   | Connect to fastest server.                            |
