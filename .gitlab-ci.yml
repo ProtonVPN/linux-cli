@@ -1,15 +1,15 @@
 ## Jobs to build and publish deb, rpm and arch based packages
 include:
- - project: 'ProtonVPN/Linux/_gitlab-ci'
+ - project: 'ProtonVPN/Linux/v3/_gitlab-ci'
    ref: public-protonvpn-repo
    file: 'message-deploy.yml'
- - project: 'ProtonVPN/Linux/_gitlab-ci'
+ - project: 'ProtonVPN/Linux/v3/_gitlab-ci'
    ref: public-protonvpn-repo
    file: 'gitlab-ci-build-publish-debian.yml'
- - project: 'ProtonVPN/Linux/_gitlab-ci'
+ - project: 'ProtonVPN/Linux/v3/_gitlab-ci'
    ref: public-protonvpn-repo
    file: 'gitlab-ci-build-publish-rpm.yml'
- - project: 'ProtonVPN/Linux/_gitlab-ci'
+ - project: 'ProtonVPN/Linux/v3/_gitlab-ci'
    ref: public-protonvpn-repo
    file: 'gitlab-ci-build-publish-arch.yml'
  - project: 'agarroux/publish-github'
@@ -64,17 +64,11 @@ make-image-arch:
  script:
    - make image-arch branch=$CI_COMMIT_REF_SLUG src=archlinux || true
 
-make-image-fed36:
+make-image-fed38:
  stage: image
  extends: make-image-deb
  script:
-   - make image-fed36 branch=$CI_COMMIT_REF_SLUG src=fedora36
-
-make-image-fed37:
- stage: image
- extends: make-image-deb
- script:
-   - make image-fed37 branch=$CI_COMMIT_REF_SLUG src=fedora37
+   - make image-fed38 branch=$CI_COMMIT_REF_SLUG src=fedora38
 
 ######## CI Test Jobs ##########
 test-deb:
@@ -93,25 +87,18 @@ test-arch:
  image: $CI_REGISTRY_IMAGE/archlinux:branch-$CI_COMMIT_REF_SLUG
  allow_failure: true
 
-test-fed36:
+test-fed38:
  extends: test-deb
  needs:
-   - job: make-image-fed36
- image: $CI_REGISTRY_IMAGE/fedora36:branch-$CI_COMMIT_REF_SLUG
-
-test-fed37:
- extends: test-deb
- needs:
-   - job: make-image-fed37
- image: $CI_REGISTRY_IMAGE/fedora37:branch-$CI_COMMIT_REF_SLUG
+   - job: make-image-fed38
+ image: $CI_REGISTRY_IMAGE/fedora38:branch-$CI_COMMIT_REF_SLUG
 
 # Jobs to publish commits + tags from master to github
 release-publish-github:
   stage: release
   needs:
    - job: build-deb
-   - job: build-fed36
-   - job: build-fed37
+   - job: build-fed38
   when: manual
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonVPN/linux-cli.git
@@ -123,8 +110,7 @@ release-publish-github-tags:
   stage: release
   needs:
    - job: build-deb
-   - job: build-fed36
-   - job: build-fed37
+   - job: build-fed38
   when: manual
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonVPN/linux-cli.git
